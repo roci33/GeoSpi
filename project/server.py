@@ -52,7 +52,7 @@ class Server:
                     data = conn.recv(1024)
                     data = data.decode()
                     if not data:
-                        print(f"{'-' * 10}Error in data, maybe client stop the connexion{'-' * 10}")
+                        print(f"<{'-' * 10}Error in data, maybe client stop the connexion{'-' * 10}>")
                         self.set_server()
                         break
                     if i:
